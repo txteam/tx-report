@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<report
+        xmlns="http://wtms.com/xml/statistical-1.0.xsd"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://wtms.com/xml/statistical-1.0.xsd"
+        code="cashoutDetailReport" type="pagedListGrid" name="提现明细报表"
+>
+
+    <!-- 页面附加的javascript:非必填 -->
+    <script></script>
+
+    <!-- cols：非必填： 默认为2 如果条件项小于3，则自动修改对应值，如果为3的倍数，则为3，如果为2的倍数则为2 -->
+    <conditions cols="3">
+        <item id="clientName" name="客户名称" value="" type="input" tag="input" />
+        <item id="clientLoginName" name="交易账户" value="" type="input"/>
+        <item cssClass="Wdate" name="开始时间" id="minCreateDate"
+              type="input_date"
+              cssStyle="width:38%"   />
+
+        <item cssClass="Wdate" name="结束时间" type="input_date"
+              id="maxCreateDate"
+              cssStyle="width:38%"/>
+
+        <item id="paymentChannel" name="交易渠道" type="select"
+              labelName="name" items="{:====全部====}"/>
+
+    </conditions>
+
+    <!-- fitColumns:非必填，默认值为false -->
+    <views fitColumns="false" sqlMapperId="queryTradingSummaryReport">
+        <!-- formatter: -->
+        <!-- width:非必填：默认值为 150 -->
+        <!-- hidden:非必填：false -->
+        <!-- frozen:非必填：false -->
+
+        <item column="MEMBER_ID" name="客户ID"/>
+        <item column="AMOUNT" name="金额" type="number" statisticalType="sum"/>
+        <item column="AMOUNTPAID" name="已付金额" type="number" statisticalType="sum"/>
+        <item column="SN" name="交易流水号" type="number"/>
+        <item column="STATUS" name="状态" type="number" />
+        <item column="CREATEDDATE" name="交易时间"/>
+    </views>
+
+    <sqlMappers>
+        <!-- datebaseId:非必填: 如果不填则databaseId为默认值 -->
+        <sqlMapper id="queryTradingSummaryReport" datasourceId="">
+            SELECT
+            MEMBER_ID,
+            AMOUNT,
+            CREATEDDATE,
+            `STATUS`,
+            SN,
+            AMOUNTPAID
+            FROM
+            ORDERS
+        </sqlMapper>
+    </sqlMappers>
+
+
+</report>
+
+

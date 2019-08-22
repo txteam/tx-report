@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+		<report
+				xmlns="http://wtms.com/xml/statistical-1.0.xsd"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://wtms.com/xml/statistical-1.0.xsd"
+		code="waitSettleByDateChartReport" type="EChart"  name="待结算图表" subType="Bars" >
+
+	<!-- 页面附加的javascript:非必填 -->
+	<script></script>
+
+	<!-- cols：非必填： 默认为2 如果条件项小于3，则自动修改对应值，如果为3的倍数，则为3，如果为2的倍数则为2 -->
+	<conditions cols="2">
+		<item id="clientName" name="客户名称" value="" type="input"/>
+		<item id="clientName2" name="客户名称2" value="" type="input"/>
+		<item id="clientLoginName" name="交易账户" value="" type="input"/>
+		<item cssClass="Wdate" name="开始时间" id="minCreateDate" group="createDate"
+			  type="input" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd' })" readOnly="true" />
+		<item cssClass="Wdate" name="结束时间" type="input_date"
+			  id="maxCreateDate"  group="createDate"
+			  cssStyle="width:38%"/>
+	</conditions>
+	<views fitColumns="false" sqlMapperId="queryCashoutChart" />
+	<!--<echart sqlMapperId="queryCashoutChart" ></echart>-->
+	<sqlMappers >
+		<!-- datebaseId:非必填: 如果不填则databaseId为默认值 -->
+		<sqlMapper id="queryCashoutChart" datasourceId="">
+			SELECT
+			m.username AS NAME,
+			sum(a.amount) AS
+			VALUE
+			FROM
+			orders a
+			LEFT JOIN member m ON a.member_id = m.id
+			GROUP BY
+			member_id
+		</sqlMapper>
+	</sqlMappers>
+
+
+
+</report>
+
+

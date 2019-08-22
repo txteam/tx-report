@@ -1,0 +1,17 @@
+{
+  "groups": [
+    {
+      "name": "com.tx.report",
+      "type": "com.tx.report.config.ReportConfig",
+      "sourceType": "com.tx.report.config.ReportConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "com.tx.report.locations",
+      "type": "java.lang.String",
+      "sourceType": "com.tx.report.config.ReportConfig"
+    }
+  ],
+  "hints": []
+}
